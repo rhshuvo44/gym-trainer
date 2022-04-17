@@ -1,22 +1,29 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../../firebase.init";
 
 const LogIn = () => {
+    const navigate=useNavigate();
+    const location=useNavigate();
+    const from = location.state?.from?.pathname || "/";
     const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
+        signInWithEmailAndPassword
       ] = useSignInWithEmailAndPassword(auth);
+      const [signInWithGoogle] = useSignInWithGoogle(auth);
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     signInWithEmailAndPassword(email,password)
+    navigate(from, { replace: true });
   };
+  
+  const googleSingIn=()=>{
+    signInWithGoogle()
+}
   return (
     <div className="container py-5">
       <div className="w-50 m-auto">
@@ -43,6 +50,9 @@ const LogIn = () => {
         <p>
           New to gym Trainer? <Link to="/register">Please Register</Link>
         </p>
+        <button style={{border:'none'}} onClick={googleSingIn} className="w-50 mt-2 bg-primary text-white py-2"  type="submit">
+          Google SignIn
+        </button>
       </div>
     </div>
   );

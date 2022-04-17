@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../../../../firebase.init';
 
@@ -8,13 +8,15 @@ const Register = () => {
     const [
         createUserWithEmailAndPassword
       ] = useCreateUserWithEmailAndPassword(auth);
-      
+      const [signInWithGoogle] = useSignInWithGoogle(auth);
     const handleSignup=(e)=>{
         e.preventDefault()
         const email =e.target.email.value;
         const password =e.target.password.value
-        createUserWithEmailAndPassword(email, password);
-        
+        createUserWithEmailAndPassword(email, password);   
+    }
+    const googleSingIn=()=>{
+        signInWithGoogle()
     }
     return (
         <div className='container py-5'>
@@ -39,6 +41,9 @@ const Register = () => {
         </Button>
       </Form>
       <p>Allready have an account? <Link to='/login'>Please Login</Link></p>
+      <button style={{border:'none'}} onClick={googleSingIn} className="w-50 mt-2 bg-primary text-white py-2"  type="submit">
+          Google SignIn
+        </button>
       </div>
         </div>
     );
