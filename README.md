@@ -1,6 +1,6 @@
 # Gya Trainer
 
-Live Website [Click Link](https://github.com/facebook/create-react-app).
+Live Website [Click Link](https://gym-trainer-2728e.web.app/)
 
 ### features and functionality
 
