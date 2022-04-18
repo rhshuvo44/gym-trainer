@@ -16,16 +16,14 @@ const LogIn = () => {
   const emailRef = useRef("");
   const from = location.state?.from?.pathname || "/";
 
-  const [signInWithEmailAndPassword, user,error] =
+  const [signInWithEmailAndPassword, user,loading,
+    error] =
     useSignInWithEmailAndPassword(auth);
   const [signInWithGoogle, user1] = useSignInWithGoogle(auth);
   const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
-  console.log(error);
 
-  let errorElement;
-  if (error) {
-    errorElement =  <p className="text-danger"> {error.code}</p>;
-  }
+//  console.log(error.message);
+
   if (user || user1) {
     navigate(from, { replace: true });
   }
@@ -70,12 +68,14 @@ const LogIn = () => {
               required
             />
           </Form.Group>
-          {errorElement}
           <Button className="w-50" variant="primary" type="submit">
             LogIn
           </Button>
           
         </Form>
+        {
+          error && <p className="text-danger">{error.message}</p>
+        }
         <p>
           Forget Password?{" "}
           <button className="btn btn-link" onClick={restPassword}>

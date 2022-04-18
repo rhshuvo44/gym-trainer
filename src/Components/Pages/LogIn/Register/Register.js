@@ -12,7 +12,7 @@ import auth from "../../../../firebase.init";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [createUserWithEmailAndPassword, user] =
+  const [createUserWithEmailAndPassword, user,loading,error] =
     useCreateUserWithEmailAndPassword(auth);
   const [sendEmailVerification] = useSendEmailVerification(auth);
   const [signInWithGoogle, user1] = useSignInWithGoogle(auth);
@@ -61,6 +61,9 @@ const Register = () => {
             Register
           </Button>
         </Form>
+        {
+          error && <p className="text-danger">{error.message}</p>
+        }
         <p>
           Allready have an account? <Link to="/login">Please Login</Link>
         </p>
