@@ -9,16 +9,24 @@ const LogIn = () => {
     const location=useNavigate();
     const from = location.state?.from?.pathname || "/";
     const [
-        signInWithEmailAndPassword
+        signInWithEmailAndPassword,user,error
       ] = useSignInWithEmailAndPassword(auth);
-      const [signInWithGoogle] = useSignInWithGoogle(auth);
-
+      const [signInWithGoogle,user1,error1] = useSignInWithGoogle(auth);
+      
+    let errorElement;
+    if (error || error1) {
+      errorElement=<p className="text-danger"> {error?.message} {error1?.message}</p>
+        
+    }
+if (user || user1) {
+  navigate(from, { replace: true });
+}
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     signInWithEmailAndPassword(email,password)
-    navigate(from, { replace: true });
+    
   };
   
   const googleSingIn=()=>{
@@ -40,6 +48,7 @@ const LogIn = () => {
               placeholder="Password" required
             />
           </Form.Group>
+          {errorElement}
           <Button className="w-50" variant="primary" type="submit">
             LogIn
           </Button>

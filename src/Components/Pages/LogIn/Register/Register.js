@@ -1,19 +1,29 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../../firebase.init';
 
 const Register = () => {
+  const navigate=useNavigate()
     const [
-        createUserWithEmailAndPassword
+        createUserWithEmailAndPassword,user,error
       ] = useCreateUserWithEmailAndPassword(auth);
-      const [signInWithGoogle] = useSignInWithGoogle(auth);
+      const [signInWithGoogle,user1,error1] = useSignInWithGoogle(auth);
     const handleSignup=(e)=>{
         e.preventDefault()
         const email =e.target.email.value;
         const password =e.target.password.value
         createUserWithEmailAndPassword(email, password);   
+    }
+    let errorElement;
+    if (error || error1) {
+      errorElement=<div>
+      <p className='text-danger'> {error?.message} {error1?.message}</p>
+      </div>
+    }
+    if(user || user1){
+      navigate('/home')
     }
     const googleSingIn=()=>{
         signInWithGoogle()
@@ -35,7 +45,7 @@ const Register = () => {
           <Form.Control name='password' type="password" placeholder="Password" required/>
         </Form.Group>
        
-  
+        {errorElement}
      <Button className="w-50 mt-2" variant="primary" type="submit">
           Register
         </Button>
