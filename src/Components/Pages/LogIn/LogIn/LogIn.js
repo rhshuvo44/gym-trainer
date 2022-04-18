@@ -5,14 +5,14 @@ import {
   useSignInWithEmailAndPassword,
   useSignInWithGoogle
 } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import auth from "../../../../firebase.init";
 
 const LogIn = () => {
   const navigate = useNavigate();
-  const location = useNavigate();
+  const location = useLocation();
   const emailRef = useRef("");
   const from = location.state?.from?.pathname || "/";
 
@@ -22,7 +22,6 @@ const LogIn = () => {
   const [signInWithGoogle, user1] = useSignInWithGoogle(auth);
   const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
 
-//  console.log(error.message);
 
   if (user || user1) {
     navigate(from, { replace: true });
@@ -88,7 +87,7 @@ const LogIn = () => {
         <button
           style={{ border: "none" }}
           onClick={googleSingIn}
-          className="w-50 mt-2 bg-primary text-white py-2"
+          className=" mt-2 bg-primary text-white p-2"
           type="submit"
         >
           Google SignIn
