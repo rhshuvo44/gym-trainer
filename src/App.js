@@ -6,6 +6,7 @@ import Blog from './Components/Pages/Blog/Blog';
 import Checkout from './Components/Pages/Checkout/Checkout';
 import Home from './Components/Pages/Home/Home/Home';
 import Services from './Components/Pages/Home/Services/Services';
+import Training from './Components/Pages/Home/Training/Training';
 import LogIn from './Components/Pages/LogIn/LogIn/LogIn';
 import Register from './Components/Pages/LogIn/Register/Register';
 import RequireAuth from './Components/Pages/LogIn/RequireAuth/RequireAuth';
@@ -30,6 +31,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/about" element={<About />} />
+        <Route path="/training" element={<Training />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer/>
