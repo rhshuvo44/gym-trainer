@@ -28,11 +28,11 @@ const Register = () => {
           <Form.Control  type="text" placeholder="Enter Full Name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control name='email' type="email" placeholder="Enter Email" />
+          <Form.Control name='email' type="email" placeholder="Enter Email" required/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Control name='password' type="password" placeholder="Password" />
+          <Form.Control name='password' type="password" placeholder="Password" required/>
         </Form.Group>
        
   

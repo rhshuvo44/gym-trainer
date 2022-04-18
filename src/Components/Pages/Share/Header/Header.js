@@ -12,7 +12,7 @@ const Header = () => {
   }
   
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar sticky='top' collapseOnSelect expand="lg" bg="dark" variant="dark">
   <Container>
   <Navbar.Brand as={Link} to="/home">Gym-Trainer</Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -25,7 +25,7 @@ const Header = () => {
       <Nav.Link as={Link} to="/about">About</Nav.Link>
 
     {
-      user ? <button onClick={logOut}>LogOut</button>
+      user ? <button style={{border:'none', backgroundColor:'transparent',color:'gray'}} onClick={logOut}>LogOut</button>
       :<Nav.Link as={Link} to="/login">
       LogIn
     </Nav.Link>}

@@ -30,14 +30,14 @@ const LogIn = () => {
         <h1>LogIn</h1>
         <Form onSubmit={handleLogin} className="my-3">
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control name="email" type="email" placeholder="Enter email" />
+            <Form.Control name="email" type="email" placeholder="Enter email" required/>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Password" required
             />
           </Form.Group>
           <Button className="w-50" variant="primary" type="submit">
