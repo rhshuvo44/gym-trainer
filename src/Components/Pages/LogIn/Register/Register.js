@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import {
   useCreateUserWithEmailAndPassword,
   useSendEmailVerification,
-  useSignInWithGoogle,
+  useSignInWithGoogle
 } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
@@ -12,22 +12,11 @@ import auth from "../../../../firebase.init";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [createUserWithEmailAndPassword, user, error] =
+  const [createUserWithEmailAndPassword, user] =
     useCreateUserWithEmailAndPassword(auth);
   const [sendEmailVerification] = useSendEmailVerification(auth);
-  const [signInWithGoogle, user1, error1] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, user1] = useSignInWithGoogle(auth);
 
-  let errorElement;
-  if (error || error1) {
-    errorElement = (
-      <div>
-        <p className="text-danger">
-          {" "}
-          {error?.message} {error1?.message}
-        </p>
-      </div>
-    );
-  }
   if (user || user1) {
     navigate("/home");
   }
@@ -39,9 +28,8 @@ const Register = () => {
     await sendEmailVerification();
     toast("Sent email");
   };
-  const googleSingIn = async () => {
-    await signInWithGoogle();
-    toast("Login Google");
+  const googleSingIn =  () => {
+     signInWithGoogle();
   };
   return (
     <div className="container py-5">
@@ -69,8 +57,6 @@ const Register = () => {
               required
             />
           </Form.Group>
-
-          {errorElement}
           <Button className="w-50 mt-2" variant="primary" type="submit">
             Register
           </Button>
