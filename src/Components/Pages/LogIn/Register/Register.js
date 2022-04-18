@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSendEmailVerification, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../../firebase.init';
 
@@ -9,13 +9,9 @@ const Register = () => {
     const [
         createUserWithEmailAndPassword,user,error
       ] = useCreateUserWithEmailAndPassword(auth);
+      const [sendEmailVerification] = useSendEmailVerification(auth);
       const [signInWithGoogle,user1,error1] = useSignInWithGoogle(auth);
-    const handleSignup=(e)=>{
-        e.preventDefault()
-        const email =e.target.email.value;
-        const password =e.target.password.value
-        createUserWithEmailAndPassword(email, password);   
-    }
+      
     let errorElement;
     if (error || error1) {
       errorElement=<div>
@@ -24,6 +20,14 @@ const Register = () => {
     }
     if(user || user1){
       navigate('/home')
+    }
+    const handleSignup= async(e)=>{
+        e.preventDefault()
+        const email =e.target.email.value;
+        const password =e.target.password.value
+        createUserWithEmailAndPassword(email, password); 
+        await sendEmailVerification();
+        alert('Sent email');  
     }
     const googleSingIn=()=>{
         signInWithGoogle()
