@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import auth from "../../../../firebase.init";
+
+
 
 const LogIn = () => {
     const navigate=useNavigate();
     const location=useNavigate();
+    const emailRef=useRef('');
     const from = location.state?.from?.pathname || "/";
+   
     const [
         signInWithEmailAndPassword,user,error
       ] = useSignInWithEmailAndPassword(auth);
       const [signInWithGoogle,user1,error1] = useSignInWithGoogle(auth);
+      const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
       
     let errorElement;
     if (error || error1) {
@@ -21,16 +28,22 @@ const LogIn = () => {
 if (user || user1) {
   navigate(from, { replace: true });
 }
-  const handleLogin = (e) => {
+  const handleLogin =async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    signInWithEmailAndPassword(email,password)
+    await signInWithEmailAndPassword(email,password);
+    toast("Login succesce !");
     
   };
-  
-  const googleSingIn=()=>{
-    signInWithGoogle()
+  const restPassword=async()=>{
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    toast('Sent email');
+  }
+  const googleSingIn=async()=>{
+    await signInWithGoogle()
+    toast("Login Google")
 }
   return (
     <div className="container py-5">
@@ -38,9 +51,9 @@ if (user || user1) {
         <h1>LogIn</h1>
         <Form onSubmit={handleLogin} className="my-3">
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control name="email" type="email" placeholder="Enter email" required/>
+            <Form.Control ref={emailRef} name="email" type="email" placeholder="Enter email" required/>
           </Form.Group>
-
+          <ToastContainer />
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Control
               name="password"
@@ -54,7 +67,7 @@ if (user || user1) {
           </Button>
         </Form>
         <p>
-          Forget Password? <Link to="/login">Reset Password</Link>
+          Forget Password? <button className="btn btn-link" onClick={restPassword} >Reset Password</button>
         </p>
         <p>
           New to gym Trainer? <Link to="/register">Please Register</Link>
