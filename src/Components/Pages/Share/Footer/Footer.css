@@ -1,1 +1,8 @@
-
+footer {
+  color: #fff;
+  background-color: gray;
+  height: 100px;
+}
+footer p{
+    padding-top: 50px;
+}
